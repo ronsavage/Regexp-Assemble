@@ -53,7 +53,7 @@ END {
     }
 }
 
-ok( open(IN, 'eg/hostmatch/source.in'), "can open eg/hostmatch/source.in" ) or print "# $!\n";
+ok( open(IN, 'examples/hostmatch/source.in'), "can open examples/hostmatch/source.in" ) or print "# $!\n";
 while( defined( my $rec = <IN> )) {
     chomp $rec;
     if( $rec =~ /^$ra$/ ) {
@@ -104,20 +104,20 @@ SKIP: {
         unless $have_Test_File_Contents;
     my $file;
     for $file( qw/good bad error/ ) {
-        file_contents_identical( "t/$file.out", "eg/hostmatch/$file.canonical", "saw expected $file output" );
+        file_contents_identical( "t/$file.out", "examples/hostmatch/$file.canonical", "saw expected $file output" );
     }
 } # SKIP
 
 {
     my $r = Regexp::Assemble->new;
-    $r->add_file('eg/file.1')->add_file('eg/file.2');
+    $r->add_file('examples/file.1')->add_file('examples/file.2');
     is( $r->as_string, '(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
         q{add_file('file.1'), add_file('file.2')},
         'add_file() 2 calls'
     );
 
     is(
-        Regexp::Assemble->new->chomp->add_file( qw[eg/file.1 eg/file.2] )
+        Regexp::Assemble->new->chomp->add_file( qw[examples/file.1 examples/file.2] )
         ->as_string,
         '(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
         'add_file() multiple files'
@@ -125,7 +125,7 @@ SKIP: {
 
     is(
         Regexp::Assemble->new->chomp->add_file({
-            file => [qw[eg/file.1 eg/file.2]]
+            file => [qw[examples/file.1 examples/file.2]]
         })
         ->as_string,
         '(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
@@ -133,30 +133,30 @@ SKIP: {
     );
 
     my $str = Regexp::Assemble->new
-        ->add_file({ file => ['eg/file.4'], rs => '/', })
+        ->add_file({ file => ['examples/file.4'], rs => '/', })
         ->as_string;
     is( $str, '(?:(?:do|pi)g|c(?:at|ow)|hen)',
         'add_file with explicit record separator'
     );
 
     is( Regexp::Assemble->new( rs => '/' )
-        ->add_file({ file => ['eg/file.4'] })
+        ->add_file({ file => ['examples/file.4'] })
         ->as_string, $str, 'add_file hashref with record separator specified in new()'
     );
 
     is( Regexp::Assemble->new
-        ->add_file({ file => 'eg/file.4', input_record_separator => '/', })
+        ->add_file({ file => 'examples/file.4', input_record_separator => '/', })
         ->as_string, $str, 'add_file hashref with record separator specified in new()'
     );
 
     is( Regexp::Assemble->new( rs => '/' )
-        ->add_file('eg/file.4')
+        ->add_file('examples/file.4')
         ->as_string, $str, 'add_file with record separator specified in new()'
     );
 
     is(
         Regexp::Assemble->new(
-            file => 'eg/file.4',
+            file => 'examples/file.4',
             input_record_separator => '/',
         )
         ->as_string, $str,
@@ -168,12 +168,12 @@ SKIP: {
         my $raw_contents = 'cat/dog/cow/pig/hen';
 
         is( Regexp::Assemble->new
-            ->add_file({file => 'eg/file.4'})
+            ->add_file({file => 'examples/file.4'})
             ->as_string, $raw_contents, 'add_file with no record separator'
         );
 
         is(
-            Regexp::Assemble->new(file => 'eg/file.4')->as_string,
+            Regexp::Assemble->new(file => 'examples/file.4')->as_string,
                 $raw_contents,
                 'new() file and no record separator'
         );
@@ -186,7 +186,7 @@ SKIP: {
         skip( 'ignore DOS line-ending tests on Win32', 1 ) if $^O =~ /^MSWin32/;
         is(
             Regexp::Assemble->new->chomp->add_file({
-                file => [qw[eg/file.3]],
+                file => [qw[examples/file.3]],
                 rs   => "\r\n",
             })
             ->as_string,

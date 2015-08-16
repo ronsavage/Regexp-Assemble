@@ -6,22 +6,23 @@
 package Regexp::Assemble;
 
 use strict;
-use utf8;
 use warnings;
-use warnings qw(FATAL utf8); # Fatalize encoding glitches.
-use vars qw/$have_Storable $Current_Lexer $Default_Lexer $Single_Char $Always_Fail/;
 
 use constant DEBUG_ADD  => 1;
 use constant DEBUG_TAIL => 2;
 use constant DEBUG_LEX  => 4;
 use constant DEBUG_TIME => 8;
 
-# The following patterns were generated with eg/naive
+use vars qw/$have_Storable $Current_Lexer $Default_Lexer $Single_Char $Always_Fail/;
+
+# The following patterns were generated with examples/naive.
+
 $Default_Lexer = qr/(?![[(\\]).(?:[*+?]\??|\{\d+(?:,\d*)?\}\??)?|\\(?:[bABCEGLQUXZ]|[lu].|(?:[^\w]|[aefnrtdDwWsS]|c.|0\d{2}|x(?:[\da-fA-F]{2}|{[\da-fA-F]{4}})|N\{\w+\}|[Pp](?:\{\w+\}|.))(?:[*+?]\??|\{\d+(?:,\d*)?\}\??)?)|\[.*?(?<!\\)\](?:[*+?]\??|\{\d+(?:,\d*)?\}\??)?|\(.*?(?<!\\)\)(?:[*+?]\??|\{\d+(?:,\d*)?\}\??)?/; # ]) restore equilibrium
 
 $Single_Char   = qr/^(?:\\(?:[aefnrtdDwWsS]|c.|[^\w\/{|}-]|0\d{2}|x(?:[\da-fA-F]{2}|{[\da-fA-F]{4}}))|[^\$^])$/;
 
-# the pattern to return when nothing has been added (and thus not match anything)
+# The pattern to return when nothing has been added (and thus not match anything)
+
 $Always_Fail = "^\\b\0";
 
 our $VERSION = '0.36';
@@ -1978,6 +1979,8 @@ sub _dump_node {
     return $dump . '}';
 }
 
+=pod
+
 =head1 NAME
 
 Regexp::Assemble - Assemble multiple Regular Expressions into a single RE
@@ -2014,7 +2017,7 @@ are still having performance problems, you should look at using a
 trie. Note that Perl's own regular expression engine will implement
 trie optimisations in perl 5.10 (they are already available in
 perl 5.9.3 if you want to try them out). C<Regexp::Assemble> will
-do the right thing when it knows it's running on a a trie'd perl.
+do the right thing when it knows it's running on a trie'd perl.
 (At least in some version after this one).
 
 Some more examples of usage appear in the accompanying README. If
@@ -2022,6 +2025,9 @@ that file is not easy to access locally, you can find it on a web
 repository such as
 L<http://search.cpan.org/dist/Regexp-Assemble/README> or
 L<http://cpan.uwinnipeg.ca/htdocs/Regexp-Assemble/README.html>.
+
+Warning: Some mildly complex cases are not handled well. See examples/failure.01.pl
+and L<https://rt.cpan.org/Public/Bug/Display.html?id=104897>.
 
 =head1 Methods
 
@@ -3094,7 +3100,7 @@ Fine grained analysis of regular expressions.
 =item Regexp::Trie
 
 Funnily enough, this was my working name for C<Regexp::Assemble>
-during its developement. I changed the name because I thought it
+during its development. I changed the name because I thought it
 was too obscure. Anyway, C<Regexp::Trie> does much the same as
 C<Regexp::Optimizer> and C<Regexp::Assemble> except that it runs
 much faster (according to the author). It does not recognise
@@ -3257,7 +3263,7 @@ Copyright (C) 2004-2011. All rights reserved.
 If you use this module, I'd love to hear about what you're using
 it for. If you want to be informed of updates, send me a note.
 
-Ron Savage is co-maint of the module starting with V 0.36.
+Ron Savage is co-maint of the module, starting with V 0.36.
 
 =head1 Repository
 
