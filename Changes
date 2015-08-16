@@ -20,6 +20,7 @@ Revision history for Perl extension Regexp::Assemble.
 	- Rearrange pod, but not be running this module over it :-). Actually, put pod at end of file.
 	- Update Makefile.PL.
 	- Add Changelog.ini.
+	- Update MANIFEST.SKIP.
 
 0.35 2011-04-07 13:18:48 UTC
     - Update test suite to take into account the regexp
