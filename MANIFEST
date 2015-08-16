@@ -1,10 +1,5 @@
-Changes
 Changelog.ini
-MANIFEST
-MANIFEST.SKIP
-Makefile.PL
-META.yml                                 Module meta-data (added by MakeMaker)
-README
+Changes
 examples/assemble
 examples/debugging
 examples/failure.01.pl
@@ -26,6 +21,10 @@ examples/tld
 examples/track-5.10
 examples/unquotemeta
 lib/Regexp/Assemble.pm
+Makefile.PL
+MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
+README
 t/00_basic.t
 t/01_insert.t
 t/02_reduce.t
