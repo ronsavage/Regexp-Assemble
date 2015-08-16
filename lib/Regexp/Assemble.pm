@@ -2026,7 +2026,7 @@ repository such as
 L<http://search.cpan.org/dist/Regexp-Assemble/README> or
 L<http://cpan.uwinnipeg.ca/htdocs/Regexp-Assemble/README.html>.
 
-See also </LIMITATIONS>.
+See also L</LIMITATIONS>.
 
 =head1 Methods
 
