@@ -19,6 +19,7 @@ Revision history for Perl extension Regexp::Assemble.
 	- Move the contents of the TODO file into the docs, and delete that file.
 	- Rearrange pod, but not be running this module over it :-). Actually, put pod at end of file.
 	- Update Makefile.PL.
+	- Add Changelog.ini.
 
 0.35 2011-04-07 13:18:48 UTC
     - Update test suite to take into account the regexp

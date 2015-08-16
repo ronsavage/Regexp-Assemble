@@ -2026,8 +2026,7 @@ repository such as
 L<http://search.cpan.org/dist/Regexp-Assemble/README> or
 L<http://cpan.uwinnipeg.ca/htdocs/Regexp-Assemble/README.html>.
 
-Warning: Some mildly complex cases are not handled well. See examples/failure.01.pl
-and L<https://rt.cpan.org/Public/Bug/Display.html?id=104897>.
+See also </LIMITATIONS>.
 
 =head1 Methods
 
@@ -3122,7 +3121,10 @@ end-marker problem without having to rewrite the leaves.
 
 =head1 LIMITATIONS
 
-C<Regexp::Assemble> does not attempt to find common substrings. For
+Some mildly complex cases are not handled well. See examples/failure.01.pl
+and L<https://rt.cpan.org/Public/Bug/Display.html?id=104897>.
+
+<Regexp::Assemble> does not attempt to find common substrings. For
 instance, it will not collapse C</cabababc/> down to C</c(?:ab){3}c/>.
 If there's a module out there that performs this sort of string
 analysis I'd like to know about it. But keep in mind that the
@@ -3251,6 +3253,10 @@ not convinced, try running the following one-liner:
 Philippe Bruhat found a couple of corner cases where this module
 could produce incorrect results. Such feedback is invaluable,
 and only improves the module's quality.
+
+=head1 Machine-Readable Change Log
+
+The file Changes was converted into Changelog.ini by L<Module::Metadata::Changes>.
 
 =head1 AUTHOR
 
