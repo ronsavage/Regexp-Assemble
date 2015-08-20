@@ -3119,6 +3119,18 @@ end-marker problem without having to rewrite the leaves.
 
 =back
 
+=head1 See Also
+
+For alternatives to this module, consider one of:
+
+=over 4
+
+=item o L<Regex::PreSuf>
+
+=item o L<OnSearch::Regex>
+
+=back
+
 =head1 LIMITATIONS
 
 Some mildly complex cases are not handled well. See examples/failure.01.pl
