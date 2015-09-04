@@ -10,7 +10,9 @@ configure_requires:
     ExtUtils::MakeMaker:  0
 build_requires:
     ExtUtils::MakeMaker:  0
-requires:  {}
+requires:  {
+    "perl" : "5.008005"
+    }
 no_index:
     directory:
         - t
