@@ -3125,9 +3125,11 @@ For alternatives to this module, consider one of:
 
 =over 4
 
-=item o L<Regex::PreSuf>
+=item o L<Data::Munge>
 
 =item o L<OnSearch::Regex>
+
+=item o L<Regex::PreSuf>
 
 =back
 
@@ -3135,6 +3137,11 @@ For alternatives to this module, consider one of:
 
 Some mildly complex cases are not handled well. See examples/failure.01.pl
 and L<https://rt.cpan.org/Public/Bug/Display.html?id=104897>.
+
+See also L<https://rt.cpan.org/Public/Bug/Display.html?id=106480> for a discussion
+of some of the issues arising with the use of a huge number of alterations. Thanx to
+Slaven Rezic for the details of trie 'v' non-trie operations within Perl which influence
+regexp handling of alternations.
 
 <Regexp::Assemble> does not attempt to find common substrings. For
 instance, it will not collapse C</cabababc/> down to C</c(?:ab){3}c/>.
