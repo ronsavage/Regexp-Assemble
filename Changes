@@ -7,6 +7,7 @@ Revision history for Perl extension Regexp::Assemble.
 	- Update MANIFEST to include LICENCE file.
 	- Remove unicode characters from Changes and Changelog.ini files.
 	- Add TODO and update MANIFEST to note unicode issues.
+	- Add .gitignore to MANIFEST.SKIP.
 
 0.36 2015-08-16T11:34:00
 	- Ron Savage is now co-maint.
