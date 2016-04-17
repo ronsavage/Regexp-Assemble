@@ -1,5 +1,13 @@
 Revision history for Perl extension Regexp::Assemble.
 
+0.37  2016-04-18T08:51:00
+	- No code changes.
+	- Accept pull request from monsieurp to add a LICENCE (sic, see below) file. With thanx.
+		This activity is part of the CPAN PR Challenge 2016.
+	- Update MANIFEST to include LICENCE file.
+	- Remove unicode characters from Changes and Changelog.ini files.
+	- Add TODO and update MANIFEST to note unicode issues.
+
 0.36 2015-08-16T11:34:00
 	- Ron Savage is now co-maint.
 	- Move eg/ to examples/.
@@ -29,7 +37,7 @@ Revision history for Perl extension Regexp::Assemble.
 0.34 2008-06-17 20:20:14 UTC
     - Rewrite the usage of _re_sort() in order to deal
       with blead change #33874. Bug smoked out by Andreas
-      König.
+      Konig.
 
 0.33 2008-06-07 14:40:57 UTC
     - Tweaked _fastlex() to fix bug #36399 spotted by Yves
@@ -185,7 +193,7 @@ Revision history for Perl extension Regexp::Assemble.
       t/00_basic.t and t/07_warning.t was born.
     - Added an eg/ircwatcher script that demonstrates how to set up a
       dispatch table on a tracked regular expression. Credit to David
-      Rigaudière for the idea.
+      Rigaudiere for the idea.
     - Made sure all routines use an explicit return when it makes
       sense to do so. (I have a tendency to use implicit returns,
       which is evil).
@@ -193,7 +201,7 @@ Revision history for Perl extension Regexp::Assemble.
     - eg/naive updated to bring its idea of $Single_Char in line with
       Assemble.pm.
     - Cleaned up typos and PODos in the documentation.  Fixed minor
-      typo noted by David Rigaudière.
+      typo noted by David Rigaudiere.
     - Reworked as_string() and re() to play nicely with Devel::Cover,
       but alas, the module no longer runs under D::C at all. Something
       to do with the overloading of "" for re()?
