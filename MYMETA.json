@@ -4,7 +4,7 @@
       "David Landgren"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "ExtUtils::MakeMaker version 6.57_05, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "ExtUtils::MakeMaker version 7.06, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
@@ -42,5 +42,12 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.35"
+   "resources" : {
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/ronsavage/Regexp-Assemble.git",
+         "web" : "https://github.com/ronsavage/Regexp-Assemble"
+      }
+   },
+   "version" : "0.37"
 }
