@@ -13,7 +13,7 @@ use constant DEBUG_TAIL => 2;
 use constant DEBUG_LEX  => 4;
 use constant DEBUG_TIME => 8;
 
-use vars qw/$have_Storable $Current_Lexer $Default_Lexer $Single_Char $Always_Fail/;
+use vars qw/$have_Storable $Current_Lexer $Default_Lexer $Single_Char $Always_Fail $Regexp_Cmp/;
 
 # The following patterns were generated with examples/naive.
 
@@ -24,6 +24,8 @@ $Single_Char   = qr/^(?:\\(?:[aefnrtdDwWsS]|c.|[^\w\/{|}-]|0\d{2}|x(?:[\da-fA-F]
 # The pattern to return when nothing has been added (and thus not match anything)
 
 $Always_Fail = "^\\b\0";
+
+$Regexp_Cmp = \&_re_sort;
 
 our $VERSION = '0.37';
 
@@ -1604,15 +1606,15 @@ sub _combine {
         my( @short, @long );
         push @{ /^$Single_Char$/ ? \@short : \@long}, $_ for @_;
         if( @short == 1 ) {
-            @long = sort _re_sort @long, @short;
+            @long = sort $Regexp_Cmp @long, @short;
         }
         elsif( @short > 1 ) {
             # yucky but true
-            my @combine = (_make_class($self, @short), sort _re_sort @long);
+            my @combine = (_make_class($self, @short), sort $Regexp_Cmp @long);
             @long = @combine;
         }
         else {
-            @long = sort _re_sort @long;
+            @long = sort $Regexp_Cmp @long;
         }
         join( '|', @long );
     }
@@ -1635,8 +1637,8 @@ sub _combine_new {
         return '(?:'
             . join( '|' =>
                 @short > 1
-                    ? ( _make_class($self, @short), sort _re_sort @long)
-                    : ( (sort _re_sort( @long )), @short )
+                    ? ( _make_class($self, @short), sort $Regexp_Cmp @long)
+                    : ( (sort $Regexp_Cmp( @long )), @short )
             )
         . ')';
     }
@@ -1832,7 +1834,7 @@ sub _re_path_track {
                 grep { $_ ne '' }
                 keys %{$in->[$n]}
             ];
-            $o = '(?:' . join( '|' => sort _re_sort @$path ) . ')';
+            $o = '(?:' . join( '|' => sort $Regexp_Cmp @$path ) . ')';
             $o .= '?' if exists $in->[$n]{''};
             $simple  .= $o;
             $augment .= $o;
@@ -1882,11 +1884,11 @@ sub _re_path_pretty {
                             $r++ and $_ =~ s/^\(\?:/\n$indent(?:/;
                             $_
                         }
-                        sort _re_sort @$path
+                        sort $Regexp_Cmp @$path
                     );
                 }
                 else {
-                    $out .= join( "\n$indent|" => ( (sort _re_sort @long), _make_class($self, @short) ));
+                    $out .= join( "\n$indent|" => ( (sort $Regexp_Cmp @long), _make_class($self, @short) ));
                 }
                 $out .= "\n$pre)";
                 if( exists $in->[$p]{''} ) {

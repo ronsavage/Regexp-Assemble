@@ -7,7 +7,7 @@
 
 use strict;
 
-eval qq{use Test::More tests => 210};
+eval qq{use Test::More tests => 211};
 if( $@ ) {
     warn "# Test::More not available, no tests performed\n";
     print "1..1\nok 1\n";
@@ -325,6 +325,19 @@ is( Regexp::Assemble->new
     ->as_string, '\\b(?:c[de]|ab)',
         'implicit anchor word beats string'
 );
+
+{
+    local $Regexp::Assemble::Regexp_Cmp = sub($$) {
+        my ($a, $b) = @_;
+        $a =~ m/[\*\+]/ <=> $b =~ m/[\*\+]/ || $a cmp $b;
+    };
+
+    is( Regexp::Assemble->new
+        ->add(qw(ab [a-z]+ cd))
+        ->as_string, '(?:ab|cd|[a-z]+)',
+            'sort the regular expressions by the custom subroutine'
+    );
+}
 
 TODO: {
     use vars '$TODO';
