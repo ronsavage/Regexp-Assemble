@@ -1,5 +1,7 @@
 Revision history for Perl extension Regexp::Assemble.
 
+	- fix test prereqs; pod tests moved to xt (RT#122136, RT#122137)
+
 0.37  2016-04-18T08:51:00
 	- No code changes.
 	- Accept pull request from monsieurp to add a LICENCE (sic, see below) file. With thanx.

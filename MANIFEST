@@ -39,3 +39,4 @@ t/09_debug.t
 t/10_perl514.t
 TODO
 xt/author/pod.t
+xt/author/pod-coverage.t
