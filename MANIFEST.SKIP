@@ -44,4 +44,4 @@
 ^MYMETA.yml$
 ^MYMETA\.json$
 
-^/Regexp-Assemble-.*
+^Regexp-Assemble-.*
