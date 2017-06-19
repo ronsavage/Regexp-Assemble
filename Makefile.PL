@@ -33,10 +33,12 @@ my(%params) =
 	{
 		'constant' => 0,
 		'strict' => 0,
-		'Test::More' => 1.001014,
-		'Test::Pod' => 1.48,
 		'vars' => 0,
 		'warnings' => 0,
+	},
+	TEST_REQUIRES =>
+	{
+		'Test::More' => 1.001014,
 	},
 	VERSION_FROM => 'lib/Regexp/Assemble.pm',
 );
