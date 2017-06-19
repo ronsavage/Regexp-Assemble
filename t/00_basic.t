@@ -9,13 +9,9 @@
 # copyright (C) 2004-2007 David Landgren
 
 use strict;
+use warnings;
 
-eval qq{use Test::More tests => 323 };
-if( $@ ) {
-    warn "# Test::More not available, no tests performed\n";
-    print "1..1\nok 1\n";
-    exit 0;
-}
+use Test::More tests => 323;
 
 use Regexp::Assemble;
 
