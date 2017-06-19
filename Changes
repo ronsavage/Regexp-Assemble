@@ -9,8 +9,9 @@ Revision history for Perl extension Regexp::Assemble.
 		that, all these fine improvements are hers. If this version # causes difficulties, I'll
 		just bump it to 2.08.
 	- Adopt new repo structure. For details, see
-		http://savage.net.au/Ron/html/My.Workflow.for.Building.Distros.html.
-		Specifically, delete MANIFEST and META.yml, and hereafter auto-generate them.
+		http://savage.net.au/Ron/html/My.Workflow.for.Building.Distros.html. Specifically:
+		o Delete MANIFEST and META.yml, and hereafter auto-generate them.
+		o Modernize .gitignore and MANIFEST.SKIP.
 
 0.37  2016-04-18T08:51:00
 	- No code changes.

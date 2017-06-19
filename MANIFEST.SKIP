@@ -13,7 +13,6 @@
 \bpm_to_blib$
 \bMakefile$
 \bMakeMaker-\d
-^MANIFEST\.SKIP$
 
 # Avoid Module::Build generated and utility files.
 \b_build
@@ -38,5 +37,11 @@
 #   Mac OSX SMB mount metadata files
 \B\._
 
+# Avoid UltraEdit files.
+\.prj$
+\.pui$
+
 ^MYMETA.yml$
 ^MYMETA\.json$
+
+^/Regexp-Assemble-.*

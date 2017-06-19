@@ -9,6 +9,7 @@ Build.bat
 .last_cover_stats
 /Makefile
 /Makefile.old
+/MANIFEST
 /MANIFEST.bak
 /META.yml
 /META.json
@@ -18,3 +19,4 @@ nytprof.out
 *.o
 *.bs
 /_eumm/
+/Regexp-Assemble-*
