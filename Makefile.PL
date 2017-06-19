@@ -16,11 +16,8 @@ else
 
 my(%params) =
 (
-	($] ge '5.005') ?
-	(
-		AUTHOR   => 'David Landgren',
-		ABSTRACT => 'Assemble multiple Regular Expressions into a single RE',
-	) : (),
+	AUTHOR   => 'David Landgren',
+	ABSTRACT => 'Assemble multiple Regular Expressions into a single RE',
 	clean =>
 	{
 		FILES => 'cover_db blib/* Makefile MANIFEST Regexp-Assemble-*'
