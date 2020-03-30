@@ -12,9 +12,9 @@ use constant file_testcount => 3; # tests requiring Test::File::Contents
 
 eval qq{use Test::More tests => 22 + file_testcount};
 if( $@ ) {
-    warn "# Test::More not available, no tests performed\n";
-    print "1..1\nok 1\n";
-    exit 0;
+	warn "# Test::More not available, no tests performed\n";
+	print "1..1\nok 1\n";
+	exit 0;
 }
 
 use constant NR_GOOD  => 45;
@@ -25,8 +25,8 @@ my $fixed = 'The scalar remains the same';
 $_ = $fixed;
 
 my $have_Test_File_Contents = do {
-    eval { require Test::File::Contents; import Test::File::Contents };
-    $@ ? 0 : 1;
+	eval { require Test::File::Contents; import Test::File::Contents };
+	$@ ? 0 : 1;
 };
 
 my @re = <DATA>;
@@ -48,46 +48,46 @@ ok( open(ERROR, '>t/error.out'), "can open t/error.out for output" ) or print "#
 
 my( $good, $bad, $error ) = (0, 0, 0);
 END {
-    if( !$error ) {
-        unlink $_ for qw{ t/good.out t/bad.out t/error.out };
-    }
+	if( !$error ) {
+		unlink $_ for qw{ t/good.out t/bad.out t/error.out };
+	}
 }
 
 ok( open(IN, 'examples/hostmatch/source.in'), "can open examples/hostmatch/source.in" ) or print "# $!\n";
 while( defined( my $rec = <IN> )) {
-    chomp $rec;
-    if( $rec =~ /^$ra$/ ) {
-        my $seen = 0;
-        my $re;
-        for $re (@re) {
-            if( $rec =~ /^$re$/ ) {
-                print BAD "$rec\n";
-                ++$bad;
-                ++$seen;
-                last;
-            }
-        }
-        if( not $seen ) {
-            print ERROR "$rec\n";
-            ++$error;
-        }
-    }
-    else {
-        my $seen = 0;
-        my $re;
-        for $re (@re) {
-            if( $rec =~ /^$re$/ ) {
-                print ERROR "$rec\n";
-                ++$error;
-                ++$seen;
-                last;
-            }
-        }
-        if( not $seen ) {
-            print GOOD "$rec\n";
-            ++$good;
-        }
-    }
+	chomp $rec;
+	if( $rec =~ /^$ra$/ ) {
+		my $seen = 0;
+		my $re;
+		for $re (@re) {
+			if( $rec =~ /^$re$/ ) {
+				print BAD "$rec\n";
+				++$bad;
+				++$seen;
+				last;
+			}
+		}
+		if( not $seen ) {
+			print ERROR "$rec\n";
+			++$error;
+		}
+	}
+	else {
+		my $seen = 0;
+		my $re;
+		for $re (@re) {
+			if( $rec =~ /^$re$/ ) {
+				print ERROR "$rec\n";
+				++$error;
+				++$seen;
+				last;
+			}
+		}
+		if( not $seen ) {
+			print GOOD "$rec\n";
+			++$good;
+		}
+	}
 }
 
 close GOOD;
@@ -100,100 +100,100 @@ is( NR_ERROR, $error,  NR_ERROR. ' records in error' );
 is( NR_GOOD+NR_BAD+NR_ERROR, $., "$. total records" );
 
 SKIP: {
-    skip( 'Test::File::Contents not installed on this system', file_testcount )
-        unless $have_Test_File_Contents;
-    my $file;
-    for $file( qw/good bad error/ ) {
-        file_contents_identical( "t/$file.out", "examples/hostmatch/$file.canonical", "saw expected $file output" );
-    }
+	skip( 'Test::File::Contents not installed on this system', file_testcount )
+		unless $have_Test_File_Contents;
+	my $file;
+	for $file( qw/good bad error/ ) {
+		file_contents_identical( "t/$file.out", "examples/hostmatch/$file.canonical", "saw expected $file output" );
+	}
 } # SKIP
 
 {
-    my $r = Regexp::Assemble->new;
-    $r->add_file('examples/file.1')->add_file('examples/file.2');
-    is( $r->as_string, '(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
-        q{add_file('file.1'), add_file('file.2')},
-        'add_file() 2 calls'
-    );
+	my $r = Regexp::Assemble->new;
+	$r->add_file('examples/file.1')->add_file('examples/file.2');
+	is( $r->as_string, '(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
+		q{add_file('file.1'), add_file('file.2')},
+		'add_file() 2 calls'
+	);
 
-    is(
-        Regexp::Assemble->new->chomp->add_file( qw[examples/file.1 examples/file.2] )
-        ->as_string,
-        '(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
-        'add_file() multiple files'
-    );
+	is(
+		Regexp::Assemble->new->chomp->add_file( qw[examples/file.1 examples/file.2] )
+		->as_string,
+		'(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
+		'add_file() multiple files'
+	);
 
-    is(
-        Regexp::Assemble->new->chomp->add_file({
-            file => [qw[examples/file.1 examples/file.2]]
-        })
-        ->as_string,
-        '(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
-        'add_file() alternate interface'
-    );
+	is(
+		Regexp::Assemble->new->chomp->add_file({
+			file => [qw[examples/file.1 examples/file.2]]
+		})
+		->as_string,
+		'(?:b(?:l(?:ea|o)|[eo]a)t|s[aiou]ng)',
+		'add_file() alternate interface'
+	);
 
-    my $str = Regexp::Assemble->new
-        ->add_file({ file => ['examples/file.4'], rs => '/', })
-        ->as_string;
-    is( $str, '(?:(?:do|pi)g|c(?:at|ow)|hen)',
-        'add_file with explicit record separator'
-    );
+	my $str = Regexp::Assemble->new
+		->add_file({ file => ['examples/file.4'], rs => '/', })
+		->as_string;
+	is( $str, '(?:(?:do|pi)g|c(?:at|ow)|hen)',
+		'add_file with explicit record separator'
+	);
 
-    is( Regexp::Assemble->new( rs => '/' )
-        ->add_file({ file => ['examples/file.4'] })
-        ->as_string, $str, 'add_file hashref with record separator specified in new()'
-    );
+	is( Regexp::Assemble->new( rs => '/' )
+		->add_file({ file => ['examples/file.4'] })
+		->as_string, $str, 'add_file hashref with record separator specified in new()'
+	);
 
-    is( Regexp::Assemble->new
-        ->add_file({ file => 'examples/file.4', input_record_separator => '/', })
-        ->as_string, $str, 'add_file hashref with record separator specified in new()'
-    );
+	is( Regexp::Assemble->new
+		->add_file({ file => 'examples/file.4', input_record_separator => '/', })
+		->as_string, $str, 'add_file hashref with record separator specified in new()'
+	);
 
-    is( Regexp::Assemble->new( rs => '/' )
-        ->add_file('examples/file.4')
-        ->as_string, $str, 'add_file with record separator specified in new()'
-    );
+	is( Regexp::Assemble->new( rs => '/' )
+		->add_file('examples/file.4')
+		->as_string, $str, 'add_file with record separator specified in new()'
+	);
 
-    is(
-        Regexp::Assemble->new(
-            file => 'examples/file.4',
-            input_record_separator => '/',
-        )
-        ->as_string, $str,
-        'new() file and custom record separator'
-    );
+	is(
+		Regexp::Assemble->new(
+			file => 'examples/file.4',
+			input_record_separator => '/',
+		)
+		->as_string, $str,
+		'new() file and custom record separator'
+	);
 
-    {
-        local $/ = undef;
-        my $raw_contents = 'cat/dog/cow/pig/hen';
+	{
+		local $/ = undef;
+		my $raw_contents = 'cat/dog/cow/pig/hen';
 
-        is( Regexp::Assemble->new
-            ->add_file({file => 'examples/file.4'})
-            ->as_string, $raw_contents, 'add_file with no record separator'
-        );
+		is( Regexp::Assemble->new
+			->add_file({file => 'examples/file.4'})
+			->as_string, $raw_contents, 'add_file with no record separator'
+		);
 
-        is(
-            Regexp::Assemble->new(file => 'examples/file.4')->as_string,
-                $raw_contents,
-                'new() file and no record separator'
-        );
-    }
+		is(
+			Regexp::Assemble->new(file => 'examples/file.4')->as_string,
+				$raw_contents,
+				'new() file and no record separator'
+		);
+	}
 
-    eval { my $r = Regexp::Assemble->new( file => '/does/not/exist' ) };
-    is( substr($@,0,38), q{cannot open /does/not/exist for input:}, 'file does not exist for new()' );
+	eval { my $r = Regexp::Assemble->new( file => '/does/not/exist' ) };
+	is( substr($@,0,38), q{cannot open /does/not/exist for input:}, 'file does not exist for new()' );
 
-    SKIP: {
-        skip( 'ignore DOS line-ending tests on Win32', 1 ) if $^O =~ /^MSWin32/;
-        is(
-            Regexp::Assemble->new->chomp->add_file({
-                file => [qw[examples/file.3]],
-                rs   => "\r\n",
-            })
-            ->as_string,
-            '(?:e[ns]|i[ls])',
-            'add_file() with DOS line endings'
-        );
-    }
+	SKIP: {
+		skip( 'ignore DOS line-ending tests on Win32', 1 ) if $^O =~ /^MSWin32/;
+		is(
+			Regexp::Assemble->new->chomp->add_file({
+				file => [qw[examples/file.3]],
+				rs   => "\r\n",
+			})
+			->as_string,
+			'(?:e[ns]|i[ls])',
+			'add_file() with DOS line endings'
+		);
+	}
 }
 
 is( $_, $fixed, '$_ has not been altered' );

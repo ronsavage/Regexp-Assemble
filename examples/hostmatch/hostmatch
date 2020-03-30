@@ -13,14 +13,14 @@ open BAD,   '>bad.out'   or die "Cannot open bad.out for output: $!\n";
 
 my( $good, $bad ) = (0, 0);
 while( <> ) {
-    chomp;
-    if( /^$ra$/ ) {
-        ++$bad;
-    }
-    else {
-        print GOOD "$_\n";
-        ++$good;
-    }
+	chomp;
+	if( /^$ra$/ ) {
+		++$bad;
+	}
+	else {
+		print GOOD "$_\n";
+		++$good;
+	}
 }
 
 close GOOD;

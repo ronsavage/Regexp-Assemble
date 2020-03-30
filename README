@@ -45,10 +45,10 @@ print $ra->re; # prints (?:a(?:b+(?:\d*\s+)?c|(?:\w+)?\d+))
 or
 
 my $ra = Regexp::Assemble->new
-    ->add( 'foo', 'bar', 'baz', 'foom' );
+	->add( 'foo', 'bar', 'baz', 'foom' );
 
 print "$_ matches\n" if /$ra/
-    for (qw/word more stuff food rabble bark/);
+	for (qw/word more stuff food rabble bark/);
 
 or
 
@@ -56,10 +56,10 @@ use Regexp::Assemble;
 my @word = qw/flip flop slip slop/;
 
 print Regexp::Assemble->new->add(@word)->as_string;
-    # produces [fs]l[io]p
+	# produces [fs]l[io]p
 
 print Regexp::Assemble->new->add(@word)->reduce(0)->as_string;
-    # produces (?:fl(?:ip|op)|sl(?:ip|op))
+	# produces (?:fl(?:ip|op)|sl(?:ip|op))
 
 See the ./eg directory for some example scripts.
 
@@ -73,29 +73,29 @@ the following script:
 use Regexp::Assemble;
 
 my $set = [
-    {
-        accept => [qw[ .cnn.net .cnn.com ]],
-        refuse => [qw[ ^media video ]],
-    },
-    {
-        accept => [qw[ .yahoo.com ]],
-    },
+	{
+		accept => [qw[ .cnn.net .cnn.com ]],
+		refuse => [qw[ ^media video ]],
+	},
+	{
+		accept => [qw[ .yahoo.com ]],
+	},
 ];
 
 my $ra = Regexp::Assemble->new;
 
 for my $s( @$set ) {
-    my $refuse = do {
-        if( not exists $s->{refuse} ) {
-            '';
-        }
-        else {
-            '(?<!'
-            . Regexp::Assemble->new->add( @{$s->{refuse}} )->as_string
-            . ')'
-        }
-    };
-    $ra->add( map { s/\./\\./g; "$refuse$_\$" } @{$s->{accept}} );
+	my $refuse = do {
+		if( not exists $s->{refuse} ) {
+			'';
+		}
+		else {
+			'(?<!'
+			. Regexp::Assemble->new->add( @{$s->{refuse}} )->as_string
+			. ')'
+		}
+	};
+	$ra->add( map { s/\./\\./g; "$refuse$_\$" } @{$s->{accept}} );
 }
 
 my $re = $ra->re;
@@ -103,9 +103,9 @@ my $re = $ra->re;
 print $ra->as_string, "\n";
 
 while( <> ) {
-    print;
-    chomp;
-    print "\t", (/$re/ ? 'yep' : 'nope'), "\n";
+	print;
+	chomp;
+	print "\t", (/$re/ ? 'yep' : 'nope'), "\n";
 }
 
 == example end ==
@@ -138,22 +138,22 @@ use strict;
 use Regexp::Assemble;
 
 my $dispatch = {
-    'a-(\\d+)'        => sub { my $v = shift; print "speed $v->[1]\n"; },
-    'a-(\\d+)-(\\d+)' => sub { my $v = shift; print "pressure $v->[1] over $v->[2]\n"; },
-    'a-(\\w+)-(\\w+)' => sub { my $v = shift; print "message $v->[1] from $v->[2]\n"; },
+	'a-(\\d+)'        => sub { my $v = shift; print "speed $v->[1]\n"; },
+	'a-(\\d+)-(\\d+)' => sub { my $v = shift; print "pressure $v->[1] over $v->[2]\n"; },
+	'a-(\\w+)-(\\w+)' => sub { my $v = shift; print "message $v->[1] from $v->[2]\n"; },
 };
 
 my $re = Regexp::Assemble->new( track => 1 )->add( keys %$dispatch );
 
 while( <> ) {
-    chomp;
-    if( $re->match($_) ) {
-        $dispatch->{ $re->matched }( $re->mvar() );
-    }
-    else {
-        last if /q/;
-        print "\tignored\n";
-    }
+	chomp;
+	if( $re->match($_) ) {
+		$dispatch->{ $re->matched }( $re->mvar() );
+	}
+	else {
+		last if /q/;
+		print "\tignored\n";
+	}
 }
 
 == example end ==
@@ -170,7 +170,7 @@ copying the parameter).
 I initially hoped that $^R would handle this sort of stuff for me, but
 there's a bug. Consider the following pattern:
 
-    a(?{1}) (?: b(?{2}) )?
+	a(?{1}) (?: b(?{2}) )?
 
 (whitespace added for clarity). This pattern will match both the strings
 'a' and 'ab', however, in both cases, $^R will be set to 1 aftewards. I
@@ -203,16 +203,16 @@ divergence in the first path is replace by a node (a hash) and the two
 different paths carry on from there:
 
   [c o n
-        |s => [s t r u c t i v e]
-        \t => [t a i n m e n t]
+		|s => [s t r u c t i v e]
+		\t => [t a i n m e n t]
   ]
 
 And then 'confinement':
 
   [c o n
-        |s => [s t r u c t i v e]
-        |t => [t a i n m e n t]
-        \f => [f i n e m e n t]
+		|s => [s t r u c t i v e]
+		|t => [t a i n m e n t]
+		\f => [f i n e m e n t]
   ]
 
 What happens if we add a path that runs out in the middle of a
@@ -222,27 +222,27 @@ the path can both continue on, and can also stop here:
 Add 'construct':
 
   [c o n
-        |s => [s t r u c t
-        |                 | '' => undef
-        |                 \ i => [i v e]
-        |     ]
-        |t => [t a i n m e n t]
-        \f => [f i n e m e n t]
+		|s => [s t r u c t
+		|                 | '' => undef
+		|                 \ i => [i v e]
+		|     ]
+		|t => [t a i n m e n t]
+		\f => [f i n e m e n t]
   ]
 
 It should be obvious to see how the contruct branch will produce the
 pattern /construct(?:ive)?/ . Or for a longer path 'constructively':
 
   [c o n
-        |s => [s t r u c t
-        |                 | '' => undef
-        |                 \ i => [i v e
-        |                              | '' => undef
-        |                              \ l => [l y]
-        |                        ]
-        |     ]
-        |t => [t a i n m e n t]
-        \f => [f i n e m e n t]
+		|s => [s t r u c t
+		|                 | '' => undef
+		|                 \ i => [i v e
+		|                              | '' => undef
+		|                              \ l => [l y]
+		|                        ]
+		|     ]
+		|t => [t a i n m e n t]
+		\f => [f i n e m e n t]
   ]
 
 This is the state of the internal structure before reduction. When
@@ -262,8 +262,8 @@ own R::A object and see what comes out:
 Gives:
 
   [t n e m
-          | n => [n i a t]
-          \ e => [e n i f]
+		  | n => [n i a t]
+		  \ e => [e n i f]
   ]
 
 When the algorithm visits the other path (s => [s t r u c t ...]),
@@ -284,20 +284,20 @@ root).
 Unreversing the t, f reduction gives:
 
   [ t => [t a i n] \
-    f => [f i n e] | m e n t ]
+	f => [f i n e] | m e n t ]
 
 When all is said and done, the final result gives
 
   [c o n
-        |s => [s t r u c t
-        |                 | '' => undef
-        |                 \ i => [i v e
-        |                              | '' => undef
-        |                              \ l => [l y]
-        |                        ]
-        |     ]
-        [ t => [t a i n]
-          f => [f i n e] m e n t ]
+		|s => [s t r u c t
+		|                 | '' => undef
+		|                 \ i => [i v e
+		|                              | '' => undef
+		|                              \ l => [l y]
+		|                        ]
+		|     ]
+		[ t => [t a i n]
+		  f => [f i n e] m e n t ]
   ]
 
 When this data structure is traversed to build the pattern, it gives
@@ -312,11 +312,11 @@ the reduction would have gone succeeded. We would have a common
 head [t], shared by all three paths.
 
   [t
-    | c => [c u r t s]
-    \ n => [n e m
-                 | n => [n i a t]
-                 \ e => [e n i f]
-           ]
+	| c => [c u r t s]
+	\ n => [n e m
+				 | n => [n i a t]
+				 \ e => [e n i f]
+		   ]
   ]
 
 And then consider that the path [c o u r t] had also been added to
@@ -324,26 +324,26 @@ the object. We would then be able to reduce the t from the above
 reduction, and the t in [c o u r t]
 
   [c o
-      | n => [n
-      |        | s => [s t r u c t]
-      |        | t => [t a i n m e n t]
-      |        \ f => [f i n e m e n t]
-      |      ]
-      \ u => [u r t]
+	  | n => [n
+	  |        | s => [s t r u c t]
+	  |        | t => [t a i n m e n t]
+	  |        \ f => [f i n e m e n t]
+	  |      ]
+	  \ u => [u r t]
   ]
 
 gives
 
   [c o
-      | n => [n
-      |        | s => [s t r u c]
-      |        \ f => [
-      |                 f => [f i n e]
-      |                 t => [t a i n]
-      |                 m e n
-      |               ]
-      |      ]
-      \ u => [u r]
+	  | n => [n
+	  |        | s => [s t r u c]
+	  |        \ f => [
+	  |                 f => [f i n e]
+	  |                 t => [t a i n]
+	  |                 m e n
+	  |               ]
+	  |      ]
+	  \ u => [u r]
    t
   ]
 
@@ -459,11 +459,13 @@ This module is under active development. The module is managed in
 a Subversion repository, and thus, the latest working copy is
 available at
 
-  http://svnweb.mongueurs.net/Regexp-Assemble/trunk
+  https://github.com/ronsavage/Regexp-Assemble
 
 AUTHOR
 
 David Landgren
+
+Ron Savage is co-maint of the module, starting with V 0.36.
 
 I do appreciate getting e-mail, especially about Perl. Please keep in
 mind that I get a lot of spam, and take drastic measures to reduce the

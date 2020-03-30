@@ -20,32 +20,32 @@ print "$VERSION\n" and exit if $opt{v};
 $opt{d} |= 8 if $opt{T};
 
 my $ra = Regexp::Assemble->new(
-    chomp            => 1,
-    debug            => $opt{d} || 0,
-    fold_meta_pairs  => exists $opt{f} ? 0 : 1,
-    reduce           => exists $opt{r} ? 0 : 1,
-    dup_warn         => exists $opt{u} ? 1 : 0,
-    lookahead        => exists $opt{a} ? 1 : 0,
-    unroll_plus      => exists $opt{U} ? 1 : 0,
+	chomp            => 1,
+	debug            => $opt{d} || 0,
+	fold_meta_pairs  => exists $opt{f} ? 0 : 1,
+	reduce           => exists $opt{r} ? 0 : 1,
+	dup_warn         => exists $opt{u} ? 1 : 0,
+	lookahead        => exists $opt{a} ? 1 : 0,
+	unroll_plus      => exists $opt{U} ? 1 : 0,
 );
 
 if( $opt{b} or $opt{c} ) {
-    if( !$opt{b} ) {
-        # filter comments
-        $ra->pre_filter( sub { $_[0] =~ s/\s*#.*$//; 1 } );
-    }
-    elsif( !$opt{c} ) {
-        # filter blank lines
-        $ra->pre_filter( sub { length(shift) } );
-    }
-    else {
-        # filter comments and blank lines.
-        # (removing a comment may can cause a line to become blank
-        $ra->pre_filter( sub {
-            $_[0] =~ s/\s*#.*$//;
-            length($_[0])
-        } );
-    }
+	if( !$opt{b} ) {
+		# filter comments
+		$ra->pre_filter( sub { $_[0] =~ s/\s*#.*$//; 1 } );
+	}
+	elsif( !$opt{c} ) {
+		# filter blank lines
+		$ra->pre_filter( sub { length(shift) } );
+	}
+	else {
+		# filter comments and blank lines.
+		# (removing a comment may can cause a line to become blank
+		$ra->pre_filter( sub {
+			$_[0] =~ s/\s*#.*$//;
+			length($_[0])
+		} );
+	}
 }
 
 $ra->add( <> );
@@ -54,32 +54,32 @@ $ra->add( <> );
 $ra->_reduce() if $opt{S} and $opt{d} and ($opt{d} & 8);
 
 if( $opt{i} or $opt{p} or not ($opt{t} or $opt{S}) ) {
-    print $ra->as_string( indent => $opt{i} || 0 );
-    print "\n" unless $opt{n};
+	print $ra->as_string( indent => $opt{i} || 0 );
+	print "\n" unless $opt{n};
 }
 
 if( $opt{s} or $opt{S} ) {
-    warn qq{# nr=@{[$ra->stats_add]} dup=@{[$ra->stats_dup]} raw=@{[$ra->stats_raw]} cooked=@{[$ra->stats_cooked]} len=@{[$ra->stats_length]}\n};
+	warn qq{# nr=@{[$ra->stats_add]} dup=@{[$ra->stats_dup]} raw=@{[$ra->stats_raw]} cooked=@{[$ra->stats_cooked]} len=@{[$ra->stats_length]}\n};
 }
 
 if( $opt{t} ) {
-    my $error = 0;
-    my $file = $opt{t};
-    open IN, $file or die "Cannot open $file for input: $!\n";
-    print $ra->as_string, "\n";
-    while( <IN> ) {
-        chomp;
-        if( $opt{w} ) {
-            next if $_ =~ /^$ra$/;
-        }
-        else {
-            next if $_ =~ /$ra/;
-        }
-        print "FAIL <$_>\n";
-        ++$error;
-    }
-    close IN;
-    exit $error ? 1 : 0;
+	my $error = 0;
+	my $file = $opt{t};
+	open IN, $file or die "Cannot open $file for input: $!\n";
+	print $ra->as_string, "\n";
+	while( <IN> ) {
+		chomp;
+		if( $opt{w} ) {
+			next if $_ =~ /^$ra$/;
+		}
+		else {
+			next if $_ =~ /$ra/;
+		}
+		print "FAIL <$_>\n";
+		++$error;
+	}
+	close IN;
+	exit $error ? 1 : 0;
 }
 
 =head1 NAME
@@ -205,4 +205,3 @@ Copyright (C) 2004-2008 David Landgren. All rights reserved.
 
 This script is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-

@@ -20,32 +20,32 @@ print "$VERSION\n" and exit if $opt{v};
 my $r = Regexp::Assemble->new;
 
 while( <> ) {
-    chomp;
+	chomp;
 
-    # take a copy of the assembly and add the next pattern
-    my $clone = $r->clone;
-    $clone->add($_);
+	# take a copy of the assembly and add the next pattern
+	my $clone = $r->clone;
+	$clone->add($_);
 
-    # if we compile the regexp, does it blow up?
-    eval { my $regexp = $clone->re };
+	# if we compile the regexp, does it blow up?
+	eval { my $regexp = $clone->re };
 
-    # it blew up
-    if( $@ ) {
-        report();
-    }
-    else {
-        # ok, now add it for real to the assembly
-        $r->add( $_ );
-    }
+	# it blew up
+	if( $@ ) {
+		report();
+	}
+	else {
+		# ok, now add it for real to the assembly
+		$r->add( $_ );
+	}
 }
 
 sub report {
-    my $lsqb = $_ =~ tr/[/[/;
-    my $rsqb = $_ =~ tr/]/]/;
-    my $lpar = $_ =~ tr/(/(/;
-    my $rpar = $_ =~ tr/)/)/;
+	my $lsqb = $_ =~ tr/[/[/;
+	my $rsqb = $_ =~ tr/]/]/;
+	my $lpar = $_ =~ tr/(/(/;
+	my $rpar = $_ =~ tr/)/)/;
 
-    warn <<WARNING;
+	warn <<WARNING;
 $ARGV($.): [$_]
 counts: [=$lsqb ]=$rsqb (=$lpar )=$rpar
 The above line causes the assembly to fail. Look for unbalanced parens or

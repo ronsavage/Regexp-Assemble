@@ -6,10 +6,10 @@ use Regexp::Assemble;
 my $re = Regexp::Assemble->new->add( qw[ fee fie foe fum ] );
 
 while( <DATA> ) {
-    chomp;
-    if( /($re)/ ) {
-        print "Here be giants: $1\n";
-    }
+	chomp;
+	if( /($re)/ ) {
+		print "Here be giants: $1\n";
+	}
 }
 
 print $re->as_string, "\n";

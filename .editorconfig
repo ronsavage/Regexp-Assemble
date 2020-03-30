@@ -1,0 +1,17 @@
+# Explanation of this file: https://editorconfig.org
+# Style per
+# https://github.com/ronsavage/Regexp-Assemble/pull/8#issuecomment-605718707
+root = true
+
+[*]
+indent_style = tab
+indent_size = 4
+insert_final_newline = true
+
+# Test files with mixed indents: editor should not enforce indent style
+[t/{03_str.t,t/09_debug.t}]
+indent_style = unset
+
+# Input files with special formats
+[examples/file.4]
+insert_final_newline = false
