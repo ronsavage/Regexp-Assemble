@@ -30,6 +30,8 @@
 \.old$
 \.rej$
 \.tmp$
+\.swp$
+^~
 
 # Avoid OS-specific files/dirs
 #   Mac OSX metadata

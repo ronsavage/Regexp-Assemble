@@ -18,33 +18,33 @@ use strict;
 use Regexp::Assemble;
 
 my %dispatch = (
-    '^\*\*\* (\S+) joined channel (\S+)$'           => \&joined,
-    '^\*\*\* (\S+) left channel (\S+) reason (.*)$' => \&left,
-    '^q$' => sub { exit },
+	'^\*\*\* (\S+) joined channel (\S+)$'           => \&joined,
+	'^\*\*\* (\S+) left channel (\S+) reason (.*)$' => \&left,
+	'^q$' => sub { exit },
 );
 
 my $re = Regexp::Assemble->new
-    ->track(1)
-    ->add(keys %dispatch);
+	->track(1)
+	->add(keys %dispatch);
 
 sub joined {
-    my ($who, $channel) = @_;
-    print "$who joined $channel\n";
+	my ($who, $channel) = @_;
+	print "$who joined $channel\n";
 }
 
 sub left {
-    my ($who, $channel, $reason) = @_;
-    print "$who left $channel saying $reason\n";
+	my ($who, $channel, $reason) = @_;
+	print "$who left $channel saying $reason\n";
 }
 
 while( <STDIN> ) {
-    chomp;
-    if ($re->match($_)) {
-        $dispatch{$re->matched}->($re->capture);
-    }
-    else {
-        print "ignored <$_>\n";
-    }
+	chomp;
+	if ($re->match($_)) {
+		$dispatch{$re->matched}->($re->capture);
+	}
+	else {
+		print "ignored <$_>\n";
+	}
 }
 
 __DATA__
